@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.examination.hspf.mbg.mapper.FileMapper">
+  <resultMap id="BaseResultMap" type="com.examination.hspf.mbg.model.File">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="origin_name" jdbcType="VARCHAR" property="originName" />
+    <result column="new_name" jdbcType="VARCHAR" property="newName" />
+    <result column="suffix_name" jdbcType="VARCHAR" property="suffixName" />
+    <result column="modid" jdbcType="INTEGER" property="modid" />
+    <result column="up_time" jdbcType="TIMESTAMP" property="upTime" />
+    <result column="file_size" jdbcType="DOUBLE" property="fileSize" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="pass" jdbcType="INTEGER" property="pass" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, origin_name, new_name, suffix_name, modid, up_time, file_size, uid, pass, aid
+  </sql>
+  <select id="selectByExample" parameterType="com.examination.hspf.mbg.model.FileExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from file
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from file
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.examination.hspf.mbg.model.FileExample">
+    delete from file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.examination.hspf.mbg.model.File">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into file (origin_name, new_name, suffix_name, 
+      modid, up_time, file_size, 
+      uid, pass, aid)
+    values (#{originName,jdbcType=VARCHAR}, #{newName,jdbcType=VARCHAR}, #{suffixName,jdbcType=VARCHAR}, 
+      #{modid,jdbcType=INTEGER}, #{upTime,jdbcType=TIMESTAMP}, #{fileSize,jdbcType=DOUBLE}, 
+      #{uid,jdbcType=INTEGER}, #{pass,jdbcType=INTEGER}, #{aid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.examination.hspf.mbg.model.File">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="originName != null">
+        origin_name,
+      </if>
+      <if test="newName != null">
+        new_name,
+      </if>
+      <if test="suffixName != null">
+        suffix_name,
+      </if>
+      <if test="modid != null">
+        modid,
+      </if>
+      <if test="upTime != null">
+        up_time,
+      </if>
+      <if test="fileSize != null">
+        file_size,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="pass != null">
+        pass,
+      </if>
+      <if test="aid != null">
+        aid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="originName != null">
+        #{originName,jdbcType=VARCHAR},
+      </if>
+      <if test="newName != null">
+        #{newName,jdbcType=VARCHAR},
+      </if>
+      <if test="suffixName != null">
+        #{suffixName,jdbcType=VARCHAR},
+      </if>
+      <if test="modid != null">
+        #{modid,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null">
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=DOUBLE},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="pass != null">
+        #{pass,jdbcType=INTEGER},
+      </if>
+      <if test="aid != null">
+        #{aid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.examination.hspf.mbg.model.FileExample" resultType="java.lang.Long">
+    select count(*) from file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update file
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.originName != null">
+        origin_name = #{record.originName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newName != null">
+        new_name = #{record.newName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suffixName != null">
+        suffix_name = #{record.suffixName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modid != null">
+        modid = #{record.modid,jdbcType=INTEGER},
+      </if>
+      <if test="record.upTime != null">
+        up_time = #{record.upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fileSize != null">
+        file_size = #{record.fileSize,jdbcType=DOUBLE},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pass != null">
+        pass = #{record.pass,jdbcType=INTEGER},
+      </if>
+      <if test="record.aid != null">
+        aid = #{record.aid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update file
+    set id = #{record.id,jdbcType=INTEGER},
+      origin_name = #{record.originName,jdbcType=VARCHAR},
+      new_name = #{record.newName,jdbcType=VARCHAR},
+      suffix_name = #{record.suffixName,jdbcType=VARCHAR},
+      modid = #{record.modid,jdbcType=INTEGER},
+      up_time = #{record.upTime,jdbcType=TIMESTAMP},
+      file_size = #{record.fileSize,jdbcType=DOUBLE},
+      uid = #{record.uid,jdbcType=INTEGER},
+      pass = #{record.pass,jdbcType=INTEGER},
+      aid = #{record.aid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.examination.hspf.mbg.model.File">
+    update file
+    <set>
+      <if test="originName != null">
+        origin_name = #{originName,jdbcType=VARCHAR},
+      </if>
+      <if test="newName != null">
+        new_name = #{newName,jdbcType=VARCHAR},
+      </if>
+      <if test="suffixName != null">
+        suffix_name = #{suffixName,jdbcType=VARCHAR},
+      </if>
+      <if test="modid != null">
+        modid = #{modid,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null">
+        up_time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileSize != null">
+        file_size = #{fileSize,jdbcType=DOUBLE},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="pass != null">
+        pass = #{pass,jdbcType=INTEGER},
+      </if>
+      <if test="aid != null">
+        aid = #{aid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.examination.hspf.mbg.model.File">
+    update file
+    set origin_name = #{originName,jdbcType=VARCHAR},
+      new_name = #{newName,jdbcType=VARCHAR},
+      suffix_name = #{suffixName,jdbcType=VARCHAR},
+      modid = #{modid,jdbcType=INTEGER},
+      up_time = #{upTime,jdbcType=TIMESTAMP},
+      file_size = #{fileSize,jdbcType=DOUBLE},
+      uid = #{uid,jdbcType=INTEGER},
+      pass = #{pass,jdbcType=INTEGER},
+      aid = #{aid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
